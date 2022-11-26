@@ -1,0 +1,71 @@
+<div class="container">
+
+  <div class="">
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="mb-5 mt-5 text-center">
+          <span class="mb-1">Insira o tamanho da memória:</span>
+          <div class="d-flex justify-content-center">
+            <input type="number" class="form-control w-25 margin-btn" [(ngModel)]="memorySize">
+
+            <button type="button" class="btn btn-primary" (click)="setMemory()">Salvar</button>
+
+          </div>
+        </div>
+
+        <div class="mb-5 mt-5 text-center">
+          <span class="mb-1">Insira as partições que deseja alocar:</span>
+          <div class="row">
+            <div class="col-md-2" *ngFor="let partition of partitions; let i = index; trackBy: trackByFn">
+              <input type="number" class="form-control mb-2" [(ngModel)]="partitions[i]">
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-outline-primary w-100" (click)="addPartition()">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-5 mb-5 text-center">
+          <span class="mb-1">Selecione o tipo de Alocação:</span>
+          <div class="d-flex justify-content-center">
+            <div class="w-50">
+              <select class="form-select" aria-label="Selecione um tipo de alocação" [(ngModel)]="tipoAlocacao">
+                <option value="{{tipoAlocacaoEnum.BEST_FIT}}">Best Fit</option>
+                <option value="{{tipoAlocacaoEnum.WORST_FIT}}">Worst Fit</option>
+                <option value="{{tipoAlocacaoEnum.FIRST_FIT}}">First Fit</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="button" class="btn btn-primary w-25" (click)="sendPartitions()">Enviar</button>
+        </div>
+
+      </div>
+      <div class="col-md-6 text-center">
+        <h4>Memória</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Início</th>
+              <th scope="col">Fim</th>
+              <th scope="col">Tamanho</th>
+              <th scope="col">Status</th>
+              <th scope="col">Desalocar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listaMemoria">
+              <td scope="row" class="align-middle">{{item.inicio}}</td>
+              <td class="align-middle"> {{item.fim}} </td>
+              <td class="align-middle"> {{item.tamanho}} </td>
+              <td class="align-middle"> {{item.free ? 'Livre' : 'Ocupado'}} </td>
+              <td><button type="button" class="btn btn-primary">X</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <span>Tempo decorrido: {{timeAlocacao}} ns</span>
+      </div>
+    </div>
+  </div>
+</div>
