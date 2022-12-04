@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AlocacaoComponent } from './alocacao.component';
+import { TimerComponent } from './timer/timer.component';
 @NgModule({
   declarations: [
-    AlocacaoComponent
+    AlocacaoComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,

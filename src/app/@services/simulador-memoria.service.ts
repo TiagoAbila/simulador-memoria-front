@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Resposta } from '../@models/resposta';
+import { Particao, ParticoesDto } from '../@models/particao';
+import { AlocarProcessoDto, DesalocarProcessoDto, Processo } from '../@models/processo';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +19,19 @@ export class SimuladorMemoriaService {
     private readonly http: HttpClient
   ) { }
 
-  public setMemorySize(size: number): Observable<any> {
-    return this.http.get<any>(environment.route + '/init?memorySize=' + size);
+  public setParticoes(particoesDto: ParticoesDto): Observable<Particao[]> {
+    return this.http.post<Particao[]>(environment.route + '/setParticoes', particoesDto);
   }
 
-  public reset(size: number): Observable<any> {
-    return this.http.get<any>(environment.route + '/reset?memorySize=' + size);
+  public reset(): Observable<any> {
+    return this.http.get<any>(environment.route + '/reset');
   }
 
-  public bestFit(partitions: number[]): Observable<Resposta> {
-    return this.http.post<Resposta>(environment.route + '/bestFit', JSON.stringify(partitions), this.httpOptions);
+  public alocar(alocarDto: AlocarProcessoDto): Observable<Resposta> {
+    return this.http.post<Resposta>(environment.route + '/alocar', JSON.stringify(alocarDto), this.httpOptions);
   }
 
-  public worstFit(partitions: number[]): Observable<Resposta> {
-    return this.http.post<Resposta>(environment.route + '/worstFit', JSON.stringify(partitions), this.httpOptions);
-  }
-
-  public firstFit(partitions: number[]): Observable<Resposta> {
-    return this.http.post<Resposta>(environment.route + '/firstFit', JSON.stringify(partitions), this.httpOptions);
+  public desalocar(desalocarDto: DesalocarProcessoDto): Observable<Particao[]> {
+    return this.http.post<Particao[]>(environment.route + '/desalocar', JSON.stringify(desalocarDto), this.httpOptions);
   }
 }

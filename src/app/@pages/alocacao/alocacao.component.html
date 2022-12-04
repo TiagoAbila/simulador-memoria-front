@@ -1,5 +1,7 @@
 <div class="container">
-
+  <div class="text-center">
+    <button type="button" class="btn btn-primary w-25" (click)="carregarPreset()">Carregar Preset</button>
+  </div>
   <div class="">
     <div class="row">
       <div class="col-md-6">
@@ -8,9 +10,6 @@
           <span class="mb-1">Insira o tamanho da memória:</span>
           <div class="d-flex justify-content-center">
             <input type="number" class="form-control w-25 margin-btn" [(ngModel)]="memorySize">
-
-            <button type="button" class="btn btn-primary" (click)="setMemory()">Salvar</button>
-
           </div>
         </div>
 
@@ -38,7 +37,49 @@
           </div>
         </div>
         <div class="text-center">
-          <button type="button" class="btn btn-primary w-25" (click)="sendPartitions()">Enviar</button>
+          <button type="button" class="btn btn-primary w-25" (click)="sendPartitions()">Salvar Memória</button>
+        </div>
+        <div *ngIf="!processosEnviados">
+          <div class="text-center mt-5"><span>Processos:</span></div>
+          <div class="row">
+            <div class="col-md-4 mb-3" *ngFor="let processo of processos">
+              <span>Nome:</span>
+              <input type="text" class="w-100" [(ngModel)]="processo.nome">
+              <span>Tamanho:</span>
+              <input type="number" class="w-100" [(ngModel)]="processo.tamanho">
+              <span>Duração:</span>
+              <input type="number" class="w-100" [(ngModel)]="processo.duracao">
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-outline-primary w-100 box-processo"
+                (click)="addProcesso()">+</button>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-primary w-25" (click)="sendProcessos()">Enviar</button>
+          </div>
+        </div>
+        <div *ngIf="processosEnviados">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Tamanho</th>
+                <th scope="col">Duração</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of processos">
+                <td scope="row" class="align-middle">{{item.nome}}</td>
+                <td class="align-middle"> {{item.tamanho}} </td>
+                <td class="align-middle"> {{item.duracao}} </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <button type="button" class="btn btn-primary w-25" (click)="onIniciarClick()">Iniciar</button> <br>
+            <button type="button" class="btn btn-outline-primary w-25 mt-2" (click)="backProcessos()">Editar</button>
+          </div>
         </div>
 
       </div>
@@ -50,17 +91,18 @@
               <th scope="col">Início</th>
               <th scope="col">Fim</th>
               <th scope="col">Tamanho</th>
-              <th scope="col">Status</th>
-              <th scope="col">Desalocar</th>
+              <th scope="col">Processo</th>
+              <th scope="col">Duração</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of listaMemoria">
-              <td scope="row" class="align-middle">{{item.inicio}}</td>
-              <td class="align-middle"> {{item.fim}} </td>
+            <tr *ngFor="let item of listaMemoria; index as i">
+              <td scope="row" class="align-middle">{{item.enderecoDeInicio}}</td>
+              <td class="align-middle"> {{item.enderecoDeInicio + item.tamanho}} </td>
               <td class="align-middle"> {{item.tamanho}} </td>
-              <td class="align-middle"> {{item.free ? 'Livre' : 'Ocupado'}} </td>
-              <td><button type="button" class="btn btn-primary">X</button></td>
+              <td class="align-middle"> {{!item.free ? item.processo.nome : ""}} </td>
+              <td class="align-middle"> <app-timer [tempo]="!item.free ? item.processo.duracao : 0" 
+                (tempoRetornado)="atualizarTempo(i, $event)"></app-timer></td>
             </tr>
           </tbody>
         </table>

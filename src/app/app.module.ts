@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AlocacaoModule } from './@pages/alocacao/alocacao.module';
-import { ComparacaoModule } from './@pages/comparacao/comparacao.module';
 
 @NgModule({
   declarations: [
@@ -16,8 +15,7 @@ import { ComparacaoModule } from './@pages/comparacao/comparacao.module';
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    AlocacaoModule,
-    ComparacaoModule
+    AlocacaoModule
   ],
   providers: [],
   bootstrap: [AppComponent]

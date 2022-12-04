@@ -1,6 +1,7 @@
-import { Memoria } from "./memoria";
+import { Particao } from "./particao";
+
 
 export interface Resposta {
-    duracaoEmNanoSegundos: number,
-    memoriaList: Memoria[]
+    sucesso: boolean,
+    particaoList: Particao[]
 }
