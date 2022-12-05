@@ -7,7 +7,7 @@
       <div class="col-md-6">
 
         <div class="mb-5 mt-5 text-center">
-          <span class="mb-1">Insira as partições que deseja alocar:</span>
+          <span class="mb-1">Insira as partições da memória:</span>
           <div class="row">
             <div class="col-md-2" *ngFor="let partition of partitions; let i = index; trackBy: trackByFn">
               <input type="number" class="form-control mb-2" [(ngModel)]="partitions[i]">
